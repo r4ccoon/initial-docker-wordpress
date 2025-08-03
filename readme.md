@@ -178,3 +178,4 @@ To ensure optimal performance and apply any system updates, you can set up a wee
   chmod -R 755 src/wp-content/
   chmod -R 775 src/wp-content/uploads/
   ```
+
