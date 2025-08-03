@@ -1,0 +1,126 @@
+# WordPress Core
+wp-admin/
+wp-includes/
+wp-*.php
+index.php
+license.txt
+readme.html
+wp-activate.php
+wp-blog-header.php
+wp-comments-post.php
+wp-config-sample.php
+wp-cron.php
+wp-links-opml.php
+wp-load.php
+wp-login.php
+wp-mail.php
+wp-settings.php
+wp-signup.php
+wp-trackback.php
+xmlrpc.php
+
+# WordPress Content
+wp-content/index.php
+wp-content/plugins/index.php
+debug.log
+
+# Uploads
+wp-content/uploads/*
+!wp-content/uploads/.gitkeep
+
+# Environment files
+.env
+*.env.*
+!.env.example
+
+# IDE and Editor files
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+.project
+.settings/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Dependency directories
+node_modules/
+vendor/
+composer.lock
+package-lock.json
+yarn.lock
+
+# Logs
+*.log
+logs/
+
+# Database
+*.sql
+*.sqlite
+*.db
+
+# Nginx
+!docker/nginx/conf.d/
+docker/nginx/logs/*
+
+# PHP
+.php_cs.cache
+.phpcs.cache
+.phpcs.xml
+phpcs.xml
+.php_cs.dist
+.phpcs.xml.dist
+
+# Local development
+*.local
+*.local.*
+!.gitkeep
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Docker
+.docker-sync/
+.docker/
+!docker-compose.yml
+!docker/
+!docker/nginx/
+!docker/nginx/conf.d/
+!docker/php/
+!docker/php/Dockerfile
+!docker/php/php.ini
+
+# WordPress core (we're tracking src/ directly)
+!src/
+src/wp-content/plugins/hello.php
+
+# Ignore everything in src/ except specific WordPress core files we want to track
+src/wp-content/plugins/*
+!src/wp-content/plugins/index.php
+!src/wp-content/plugins/.gitkeep
+
+src/wp-content/themes/*
+!src/wp-content/themes/index.php
+!src/wp-content/themes/.gitkeep
+
+# Ignore all dotfiles except .gitkeep
+.*
+!.gitignore
+!.gitkeep
+!.env.example
+
+# Ignore all files in the root except specific ones we want to track
+/*
+!/docker-compose.yml
+!/README.md
+!/.gitignore
+!/docker/
+!/src/
