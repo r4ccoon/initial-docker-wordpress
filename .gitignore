@@ -64,6 +64,8 @@ logs/
 # Nginx
 !docker/nginx/conf.d/
 docker/nginx/logs/*
+!docker/nginx/ssl/.gitkeep
+docker/nginx/ssl/*
 
 # PHP
 .php_cs.cache
