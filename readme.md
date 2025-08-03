@@ -39,18 +39,16 @@ find src/ -type f -exec chmod 644 {} \;
 ### 3. Start the Environment
 
 ```bash
-docker-compose up -d --build
+docker compose up -d --build
 ```
+
+### 4. Database:
+we assume that you exclude database out of docker and have as a native mysql/mariaDB.
 
 ### 4. WordPress Configuration
 
 1. Access the WordPress installation at: http://localhost:8080
 2. Follow the WordPress installation wizard
-3. Use the following database credentials:
-   - Database Host: `db` (when using included MySQL container)
-   - Database Name: `wordpress`
-   - Database User: `wordpress`
-   - Database Password: `wordpress`
 
 ## Development Workflow
 
@@ -60,11 +58,11 @@ docker-compose up -d --build
 
 ## Useful Commands
 
-- Start services: `docker-compose up -d`
-- Stop services: `docker-compose down`
-- View logs: `docker-compose logs -f`
-- Access PHP container: `docker-compose exec php bash`
-- Access MySQL (if using included container): `docker-compose exec db mysql -uwordpress -pwordpress`
+- Start services: `docker compose up -d`
+- Stop services: `docker compose down`
+- View logs: `docker compose logs -f`
+- Access PHP container: `docker compose exec php bash`
+- Access MySQL (if using included container): `docker compose exec db mysql -uwordpress -pwordpress`
 
 ## Environment Configuration
 
@@ -74,9 +72,64 @@ docker-compose up -d --build
 
 ## Security Notes
 
-- Change default database credentials in `docker-compose.yml` for production
 - Never commit sensitive information (like `.env` files) to version control
 - Configure proper file permissions in production
+
+## Automatic Startup on Boot (Ubuntu)
+
+To ensure your WordPress site starts automatically when the Ubuntu server boots up, follow these steps to create a systemd service:
+
+1. Create a systemd service file:
+   ```bash
+   sudo nano /etc/systemd/system/wordpress.service
+   ```
+
+2. Add the following content to the file (adjust paths as needed):
+   ```ini
+   [Unit]
+   Description=WordPress with Docker Compose
+   Requires=docker.service
+   After=docker.service
+
+   [Service]
+   Type=oneshot
+   RemainAfterExit=yes
+   WorkingDirectory=/path/to/your/wordpress/project
+   ExecStart=/usr/bin/docker compose up -d
+   ExecStop=/usr/bin/docker compose down
+   Restart=on-failure
+   RestartSec=10
+
+   [Install]
+   WantedBy=multi-user.target
+   ```
+
+3. Reload systemd to recognize the new service:
+   ```bash
+   sudo systemctl daemon-reload
+   ```
+
+4. Enable the service to start on boot:
+   ```bash
+   sudo systemctl enable wordpress.service
+   ```
+
+5. Start the service immediately:
+   ```bash
+   sudo systemctl start wordpress
+   ```
+
+6. Verify the service status:
+   ```bash
+   sudo systemctl status wordpress
+   ```
+
+### Useful Commands for Managing the Service
+
+- Start the service: `sudo systemctl start wordpress`
+- Stop the service: `sudo systemctl stop wordpress`
+- Restart the service: `sudo systemctl restart wordpress`
+- View logs: `sudo journalctl -u wordpress -f`
 
 ## Scheduled Maintenance
 
@@ -93,8 +146,8 @@ To ensure optimal performance and apply any system updates, you can set up a wee
    ```bash
    #!/bin/bash
    cd /path/to/your/wordpress/project
-   /usr/bin/docker-compose down
-   /usr/bin/docker-compose up -d
+   /usr/bin/docker compose down
+   /usr/bin/docker compose up -d
    ```
 
 3. Make the script executable:

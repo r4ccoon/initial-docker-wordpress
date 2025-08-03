@@ -38,7 +38,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 WORKDIR /var/www/html
 
 # Copy custom PHP configuration
-COPY ./php.ini /usr/local/etc/php/conf.d/custom.ini
+COPY ./docker/php/php.ini /usr/local/etc/php/conf.d/custom.ini
 
 # Set proper permissions
 RUN chown -R www-data:www-data /var/www/html \
